@@ -1,0 +1,121 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+unless ARGV.count == 1
+  puts "Usage: scrub_test_data BOARD_DIRECTORY"
+  exit 1
+end
+
+RULES = {
+  'actions' => {
+    'data' => {
+      'card' => {
+        'id' => :id
+      },
+      'text' => true
+    },
+    'memberCreator' => {
+      'fullName' => :memberFullName
+    },
+    'type' => true
+  },
+  'cards' => {
+    'name' => true,
+    'closed' => true,
+    'cover' => {
+      'idAttachment' => :id
+    },
+    'desc' => true,
+    'idList' => :id,
+    'labels' => ['color', 'name'],
+    'pos' => true
+  },
+  'lists' => {
+    'closed' => true,
+    'id' => :id,
+    'name' => true,
+    'pos' => true
+  }
+}
+
+ANONYMIZATION_MAPPINGS = {}
+ANONYMIZATION_VALUES = {
+  id: (1..100).map { |i| "id#{i}"},
+  memberFullName: ['Smerson McPerson']
+}
+
+def anonymize(value, type)
+  mappings = (ANONYMIZATION_MAPPINGS[type] ||= {})
+  mappings[value] ||= ((ANONYMIZATION_VALUES[type] || []).shift or raise "Ran out of anonymizations for #{type}")
+end
+
+def scrub_json(json, rules)
+  if json.is_a?(Array)
+    json.each { |item| scrub_json(item, rules) }
+  elsif json.is_a?(Hash)
+    json.keys.each do |key|
+      if rules.include?(key)
+        if rules.is_a?(Hash)
+          case rules[key]
+          when Array, Hash
+            scrub_json(json[key], rules[key])
+          when Symbol
+            json[key] = anonymize(json[key], rules[key])
+          end
+        end
+      else
+        json.delete(key)
+      end
+    end
+  end
+end
+
+def scrub_dir(dir)
+  board_file_paths = Dir.glob("#{dir}/*.json").to_a
+  raise "Expected exactly one json file in #{dir}" unless board_file_paths.count == 1
+
+  board_json = JSON.parse(File.read(board_file_paths.first))
+  scrub_json(board_json, RULES)
+  File.write(board_file_paths.first, JSON.pretty_generate(board_json))
+
+  Dir.glob("#{dir}/*_*/*_*/attachments/*.*").to_a.each do |attachment_path|
+    basename = File.basename(attachment_path)
+    if match = /\A(?<pos>\d+)_(?<id>[a-z0-9]+)(?<rest>.*)?\z/.match(basename)
+      new_id = anonymize(match[:id], :id)
+      new_path = File.join(File.dirname(attachment_path), "#{match[:pos]}_#{new_id}#{match[:rest]}")
+      File.rename(attachment_path, new_path)
+    end
+  end
+
+  File.delete(*Dir.glob("#{dir}/**/card.json").to_a)
+  File.delete(*Dir.glob("#{dir}/**/description.md").to_a)
+
+  Dir.glob("#{dir}/*_*/*_*").to_a.each do |card_dir_path|
+    next unless File.directory?(card_dir_path)
+    if Dir.empty?(card_dir_path)
+      Dir.rmdir(card_dir_path)
+    else
+      basename = File.basename(card_dir_path)
+      pos, id = basename.split('_')
+      new_id = anonymize(id, :id)
+      new_path = File.join(File.dirname(card_dir_path), "#{pos}_#{new_id}")
+      File.rename(card_dir_path, new_path)
+    end
+  end
+
+  Dir.glob("#{dir}/*_*").to_a.each do |list_dir_path|
+    next unless File.directory?(list_dir_path)
+    if Dir.empty?(list_dir_path)
+      Dir.rmdir(list_dir_path)
+    else
+      basename = File.basename(list_dir_path)
+      pos, id = basename.split('_')
+      new_id = anonymize(id, :id)
+      new_path = File.join(File.dirname(list_dir_path), "#{pos}_#{new_id}")
+      File.rename(list_dir_path, new_path)
+    end
+  end
+end
+
+scrub_dir(ARGV[0])
