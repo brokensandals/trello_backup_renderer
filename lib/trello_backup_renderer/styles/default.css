@@ -36,10 +36,23 @@
 }
 
 .labels {
+  margin-top: 5px;
   padding-left: 0;
 }
 
 .label {
   list-style-type: none;
-  display: inline;
+  display: inline-block;
+  padding: 3px;
+  border-radius: 3px;
+  font-size: 75%;
+}
+
+.comments {
+  padding-left: 0;
+}
+
+.comment {
+  list-style-type: none;
+  border-top: 1px solid gray;
 }

@@ -24,7 +24,7 @@
             <% if card.labels.any? %>
               <ul class="labels">
                 <% card.labels.each do |label| %>
-                  <li class="label"><span font-color="<%= label.color %>"><%= label.name %></span></li>
+                  <li class="label" style="background-color: <%= label.color %>"><%= label.name %></li>
                 <% end %>
               </ul>
             <% end %>
@@ -37,7 +37,7 @@
               <ul class="comments">
                 <% card.comments.each do |comment| %>
                   <li class="comment">
-                    <span class="authorship"><%= comment.creator_full_name %> commented:</span> <%= comment.text %>
+                    <p><span class="authorship"><%= comment.creator_full_name %> commented:</span> <%= comment.text %></p>
                   </li>
                 <% end %>
               </ul>

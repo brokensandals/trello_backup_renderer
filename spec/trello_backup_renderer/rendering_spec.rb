@@ -24,8 +24,8 @@ RSpec.describe TrelloBackupRenderer::Rendering do
 
       expect(html).to include 'This card has a description.'
 
-      expect(html).to include '<span font-color="green">Green Label</span>'
-      expect(html).to include '<span font-color="yellow">Yellow Label</span>'
+      expect(html).to include '<span style="background-color: green">Green Label</span>'
+      expect(html).to include '<span style="background-color: yellow">Yellow Label</span>'
 
       expect(html).to include 'Smerson McPerson commented:'
       expect(html).to include 'I&#39;ve attached a photo of my cat.'
