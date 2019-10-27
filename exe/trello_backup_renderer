@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'trello_backup_renderer'
+
+optparse = OptionParser.new do |opts|
+  opts.banner = 'Usage: trello_backup_renderer BOARD_BACKUP_DIR [options]'
+
+  opts.on('--version', 'Print program version and exit') do
+    puts "trello_backup_renderer #{TrelloBackupRenderer::VERSION}"
+    exit 0
+  end
+end
+
+optparse.parse!
+if ARGV.length != 1
+  puts optparse
+  exit -1
+end
+
+board_dir = ARGV.shift
+board = TrelloBackupRenderer.load_board_dir(board_dir)
+html = TrelloBackupRenderer.generate_board_html(board)
+out_file = File.join(board_dir, File.basename(TrelloBackupRenderer.find_board_json_file(board_dir)).sub(/json\z/, 'html'))
+File.write(out_file, html)
