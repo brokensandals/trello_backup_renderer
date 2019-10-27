@@ -27,6 +27,7 @@ module TrelloBackupRenderer
     class Card
       attr_reader :closed
       attr_reader :cover_attachment
+      attr_reader :desc
       attr_reader :id
       attr_reader :id_list
       attr_reader :name
@@ -35,6 +36,7 @@ module TrelloBackupRenderer
       def initialize(args)
         @closed = args[:closed]
         @cover_attachment = args[:cover_attachment]
+        @desc = args[:desc]
         @id = args[:id]
         @id_list = args[:id_list]
         @name = args[:name]

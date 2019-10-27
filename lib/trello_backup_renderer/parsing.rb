@@ -10,6 +10,7 @@ module TrelloBackupRenderer
       Card.new(
         closed: card_json['closed'],
         cover_attachment: attachments_by_id[cover_id_attachment],
+        desc: card_json['desc'],
         id: card_json['id'],
         id_list: card_json['idList'],
         name: card_json['name'],

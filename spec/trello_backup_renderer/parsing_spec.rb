@@ -53,6 +53,7 @@ RSpec.describe TrelloBackupRenderer::Parsing do
       expect(card1.closed).to be(false)
       expect(card1.cover_attachment).to_not be_nil
       expect(card1.cover_attachment.path).to eq(TEST_COVER_RELATIVE_PATH)
+      expect(card1.desc).to eq('This card has a description.')
       expect(card1.name).to eq('Card with All Supported Features')
 
       card2 = l2cards[0]
