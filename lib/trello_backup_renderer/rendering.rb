@@ -22,11 +22,29 @@ module TrelloBackupRenderer
       def cards
         super.reject(&:closed).map { |card| CardPresenter.new(card) }
       end
+
+      def name
+        ERB::Util.h(super)
+      end
     end
 
     class CardPresenter < SimpleDelegator
       def desc
         ERB::Util.h(super) if super
+      end
+
+      def labels
+        super.map { |label| LabelPresenter.new(label) }
+      end
+
+      def name
+        ERB::Util.h(super)
+      end
+    end
+
+    class LabelPresenter < SimpleDelegator
+      def name
+        ERB::Util.h(super)
       end
     end
 

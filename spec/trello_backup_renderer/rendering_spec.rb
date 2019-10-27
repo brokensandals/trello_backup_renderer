@@ -1,4 +1,5 @@
 RSpec.describe TrelloBackupRenderer::Rendering do
+  Label = TrelloBackupRenderer::Models::Label
   Card = TrelloBackupRenderer::Models::Card
   List = TrelloBackupRenderer::Models::List
   Board = TrelloBackupRenderer::Models::Board
@@ -47,13 +48,21 @@ RSpec.describe TrelloBackupRenderer::Rendering do
       expect(html).not_to include 'Archived Card'
     end
 
-    it 'escapes html in card descriptions' do
-      card = Card.new(name: 'Card', pos: 1, desc: 'Hello <p>How are you</p>')
-      list = List.new(name: 'List', pos: 1, cards: [card])
+    it 'escapes html' do
+      label = Label.new(color: 'green', name: '<em>Important</em> Label')
+      card = Card.new(name: '<em>Cool</em> Card', pos: 1, desc: 'Hello <p>How are you</p>', labels: [label])
+      list = List.new(name: '<em>Great</em> List', pos: 1, cards: [card])
       board = Board.new(lists: [list])
       html = TrelloBackupRenderer.generate_board_html(board)
 
+      expect(html).not_to include '<em>Great</em> List'
+      expect(html).not_to include '<em>Cool</em> Card'
+      expect(html).not_to include '<em>Important</em> Label'
       expect(html).not_to include 'Hello <p>How are you</p>'
+
+      expect(html).to include '&lt;em&gt;Great&lt;/em&gt; List'
+      expect(html).to include '&lt;em&gt;Cool&lt;/em&gt; Card'
+      expect(html).to include '&lt;em&gt;Important&lt;/em&gt; Label'
       expect(html).to include 'Hello &lt;p&gt;How are you&lt;/p&gt;'
     end
   end
