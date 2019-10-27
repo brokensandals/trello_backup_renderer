@@ -6,9 +6,18 @@ module TrelloBackupRenderer
     CSS_FILE = File.read(File.join(__dir__, 'styles', 'default.css'))
     NO_AUTHORSHIP_CSS_FILE = File.read(File.join(__dir__, 'styles', 'no-authorship.css'))
 
+    class Options
+      attr_reader :hide_authorship
+
+      def initialize(args = {})
+        @hide_authorship = args[:hide_authorship]
+      end
+    end
+
     class BoardPage
-      def initialize(board)
+      def initialize(board, options)
         @board = board
+        @options = options
       end
 
       def lists
@@ -16,8 +25,9 @@ module TrelloBackupRenderer
       end
 
       def stylesheet_tags
-        '<style type="text/css">' + CSS_FILE + '</style>' +
-          '<style type="text/css">' + NO_AUTHORSHIP_CSS_FILE + '</style>'
+        tags = '<style type="text/css">' + CSS_FILE + '</style>'
+        tags << '<style type="text/css">' + NO_AUTHORSHIP_CSS_FILE + '</style>' if @options.hide_authorship
+        tags
       end
 
       def render
@@ -69,8 +79,8 @@ module TrelloBackupRenderer
       end
     end
 
-    def generate_board_html(board)
-      BoardPage.new(board).render
+    def generate_board_html(board, options = Options.new)
+      BoardPage.new(board, options).render
     end
   end
 end

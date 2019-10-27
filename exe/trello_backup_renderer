@@ -3,8 +3,13 @@
 require 'optparse'
 require 'trello_backup_renderer'
 
+options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = 'Usage: trello_backup_renderer BOARD_BACKUP_DIR [options]'
+
+  opts.on('--hide-authorship', 'Do not display the authors of comments. (Done via CSS.)') do
+    options[:hide_authorship] = true
+  end
 
   opts.on('--version', 'Print program version and exit') do
     puts "trello_backup_renderer #{TrelloBackupRenderer::VERSION}"
@@ -18,8 +23,10 @@ if ARGV.length != 1
   exit -1
 end
 
+rendering_options = TrelloBackupRenderer::Rendering::Options.new(options)
+
 board_dir = ARGV.shift
 board = TrelloBackupRenderer.load_board_dir(board_dir)
-html = TrelloBackupRenderer.generate_board_html(board)
+html = TrelloBackupRenderer.generate_board_html(board, rendering_options)
 out_file = File.join(board_dir, File.basename(TrelloBackupRenderer.find_board_json_file(board_dir)).sub(/json\z/, 'html'))
 File.write(out_file, html)
