@@ -64,6 +64,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 A script `bin/scrub_test_data` is included which can be run against a board backup directory to remove attributes and files which are unused by trello_backup_renderer and replace IDs and member names with placeholder values.
 This was used in creating the test data seen in `spec/test_board`.
+Warning: The `scrub_test_data` script deletes data from the specified directory in-place.
 
 ## Contributing
 
