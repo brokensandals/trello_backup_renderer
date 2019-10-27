@@ -11,12 +11,14 @@ module TrelloBackupRenderer
     class List
       attr_reader :cards
       attr_reader :closed
+      attr_reader :id
       attr_reader :name
       attr_reader :pos
 
       def initialize(args)
         @cards = (args[:cards] || []).sort_by(&:pos)
         @closed = args[:closed]
+        @id = args[:id]
         @name = args[:name]
         @pos = args[:pos]
       end
@@ -24,13 +26,27 @@ module TrelloBackupRenderer
 
     class Card
       attr_reader :closed
+      attr_reader :cover_attachment
+      attr_reader :id
+      attr_reader :id_list
       attr_reader :name
       attr_reader :pos
 
       def initialize(args)
         @closed = args[:closed]
+        @cover_attachment = args[:cover_attachment]
+        @id = args[:id]
+        @id_list = args[:id_list]
         @name = args[:name]
         @pos = args[:pos]
+      end
+    end
+
+    class Attachment
+      attr_reader :path
+
+      def initialize(args)
+        @path = args[:path]
       end
     end
   end

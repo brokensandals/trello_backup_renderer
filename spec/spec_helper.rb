@@ -2,6 +2,7 @@ require "bundler/setup"
 require "trello_backup_renderer"
 
 TEST_BOARD_DIR = File.join(__dir__, 'test_board')
+TEST_COVER_RELATIVE_PATH = '0_id6/1_id10/attachments/0_id7_4949446.jpg'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

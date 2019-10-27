@@ -1,4 +1,21 @@
 RSpec.describe TrelloBackupRenderer::Parsing do
+  describe '.load_attachment_paths' do
+    it 'correctly loads paths for test board' do
+      expect(TrelloBackupRenderer.load_attachment_paths(TEST_BOARD_DIR)).to eq(
+        'id7' => "#{TEST_BOARD_DIR}/#{TEST_COVER_RELATIVE_PATH}"
+      )
+    end
+  end
+
+  describe '.relativize_attachment_paths' do
+    it 'removes base directory' do
+      paths = { 'id0' => "#{TEST_BOARD_DIR}/foo/bar" }
+      expect(TrelloBackupRenderer.relativize_attachment_paths(paths, TEST_BOARD_DIR)).to eq(
+        'id0' => 'foo/bar'
+      )
+    end
+  end
+
   describe '.load_board_dir' do
     it 'correctly loads test board' do
       board = TrelloBackupRenderer.load_board_dir(TEST_BOARD_DIR)
@@ -29,14 +46,18 @@ RSpec.describe TrelloBackupRenderer::Parsing do
 
       card0 = l0cards[0]
       expect(card0.closed).to be(false)
+      expect(card0.cover_attachment).to be_nil
       expect(card0.name).to eq('Simple Card')
 
       card1 = l0cards[1]
       expect(card1.closed).to be(false)
+      expect(card1.cover_attachment).to_not be_nil
+      expect(card1.cover_attachment.path).to eq(TEST_COVER_RELATIVE_PATH)
       expect(card1.name).to eq('Card with All Supported Features')
 
       card2 = l2cards[0]
       expect(card2.closed).to be(false)
+      expect(card0.cover_attachment).to be_nil
       expect(card2.name).to eq('Labeled Card')
     end
   end
