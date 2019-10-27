@@ -60,6 +60,16 @@ RSpec.describe TrelloBackupRenderer::Parsing do
       expect(card2.closed).to be(false)
       expect(card0.cover_attachment).to be_nil
       expect(card2.name).to eq('Labeled Card')
+
+      c1labels = card1.labels
+      expect(c1labels.count).to eq(1)
+      expect(c1labels[0].color).to eq('yellow')
+      expect(c1labels[0].name).to eq('Yellow Label')
+
+      c2labels = card2.labels
+      expect(c2labels.count).to eq(1)
+      expect(c2labels[0].color).to eq('green')
+      expect(c2labels[0].name).to eq('Green Label')
     end
   end
 end

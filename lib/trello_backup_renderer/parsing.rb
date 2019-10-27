@@ -4,6 +4,13 @@ module TrelloBackupRenderer
   module Parsing
     include Models
 
+    def parse_label_json(label_json)
+      Label.new(
+        color: label_json['color'],
+        name: label_json['name']
+      )
+    end
+
     def parse_card_json(card_json, attachments_by_id)
       cover_id_attachment = card_json.fetch('cover', {})['idAttachment']
 
@@ -13,6 +20,7 @@ module TrelloBackupRenderer
         desc: card_json['desc'],
         id: card_json['id'],
         id_list: card_json['idList'],
+        labels: (card_json['labels'] || []).map { |label_json| parse_label_json(label_json) },
         name: card_json['name'],
         pos: card_json['pos']
       )

@@ -30,6 +30,7 @@ module TrelloBackupRenderer
       attr_reader :desc
       attr_reader :id
       attr_reader :id_list
+      attr_reader :labels
       attr_reader :name
       attr_reader :pos
 
@@ -39,6 +40,7 @@ module TrelloBackupRenderer
         @desc = args[:desc]
         @id = args[:id]
         @id_list = args[:id_list]
+        @labels = (args[:labels] || []).sort_by(&:name)
         @name = args[:name]
         @pos = args[:pos]
       end
@@ -49,6 +51,16 @@ module TrelloBackupRenderer
 
       def initialize(args)
         @path = args[:path]
+      end
+    end
+
+    class Label
+      attr_reader :color
+      attr_reader :name
+
+      def initialize(args)
+        @color = args[:color]
+        @name = args[:name]
       end
     end
   end
