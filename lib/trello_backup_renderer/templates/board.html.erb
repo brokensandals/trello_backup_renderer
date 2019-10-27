@@ -30,6 +30,16 @@
             <% if card.desc %>
               <p class="card-desc"><%= card.desc %></p>
             <% end %>
+
+            <% if card.comments.any? %>
+              <ul class="comments">
+                <% card.comments.each do |comment| %>
+                  <li class="comment">
+                    <span class="authorship"><%= comment.creator_full_name %> commented:</span> <%= comment.text %>
+                  </li>
+                <% end %>
+              </ul>
+            <% end %>
           </li>
         <% end %>
       </ul>

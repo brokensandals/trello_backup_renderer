@@ -1,4 +1,5 @@
 RSpec.describe TrelloBackupRenderer::Rendering do
+  Comment = TrelloBackupRenderer::Models::Comment
   Label = TrelloBackupRenderer::Models::Label
   Card = TrelloBackupRenderer::Models::Card
   List = TrelloBackupRenderer::Models::List
@@ -25,6 +26,9 @@ RSpec.describe TrelloBackupRenderer::Rendering do
 
       expect(html).to include '<span font-color="green">Green Label</span>'
       expect(html).to include '<span font-color="yellow">Yellow Label</span>'
+
+      expect(html).to include 'Smerson McPerson commented:'
+      expect(html).to include 'I&#39;ve attached a photo of my cat.'
     end
 
     it 'excludes archived lists' do
@@ -49,8 +53,9 @@ RSpec.describe TrelloBackupRenderer::Rendering do
     end
 
     it 'escapes html' do
+      comment = Comment.new(creator_full_name: '<em>Fancy</em> Person', text: '<em>Emphatic</em> Comment')
       label = Label.new(color: 'green', name: '<em>Important</em> Label')
-      card = Card.new(name: '<em>Cool</em> Card', pos: 1, desc: 'Hello <p>How are you</p>', labels: [label])
+      card = Card.new(name: '<em>Cool</em> Card', pos: 1, desc: 'Hello <p>How are you</p>', labels: [label], comments: [comment])
       list = List.new(name: '<em>Great</em> List', pos: 1, cards: [card])
       board = Board.new(lists: [list])
       html = TrelloBackupRenderer.generate_board_html(board)
@@ -59,11 +64,15 @@ RSpec.describe TrelloBackupRenderer::Rendering do
       expect(html).not_to include '<em>Cool</em> Card'
       expect(html).not_to include '<em>Important</em> Label'
       expect(html).not_to include 'Hello <p>How are you</p>'
+      expect(html).not_to include '<em>Fancy</em> Person'
+      expect(html).not_to include '<em>Emphatic</em> Comment'
 
       expect(html).to include '&lt;em&gt;Great&lt;/em&gt; List'
       expect(html).to include '&lt;em&gt;Cool&lt;/em&gt; Card'
       expect(html).to include '&lt;em&gt;Important&lt;/em&gt; Label'
       expect(html).to include 'Hello &lt;p&gt;How are you&lt;/p&gt;'
+      expect(html).to include '&lt;em&gt;Fancy&lt;/em&gt; Person'
+      expect(html).to include '&lt;em&gt;Emphatic&lt;/em&gt; Comment'
     end
   end
 end

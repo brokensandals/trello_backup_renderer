@@ -33,6 +33,10 @@ module TrelloBackupRenderer
         ERB::Util.h(super) if super
       end
 
+      def comments
+        super.map { |comment| CommentPresenter.new(comment) }
+      end
+
       def labels
         super.map { |label| LabelPresenter.new(label) }
       end
@@ -44,6 +48,16 @@ module TrelloBackupRenderer
 
     class LabelPresenter < SimpleDelegator
       def name
+        ERB::Util.h(super)
+      end
+    end
+
+    class CommentPresenter < SimpleDelegator
+      def creator_full_name
+        ERB::Util.h(super)
+      end
+
+      def text
         ERB::Util.h(super)
       end
     end
