@@ -8,6 +8,12 @@
 <% lists.each do |list| %>
   <section class="list">
     <h1><%= list.name %></h1>
+
+    <% list.cards.each do |card| %>
+      <section class="card">
+        <h1><%= card.name %></h1>
+      </section>
+    <% end %>
   </section>
 <% end %>
 

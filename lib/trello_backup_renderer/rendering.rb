@@ -10,11 +10,17 @@ module TrelloBackupRenderer
       end
 
       def lists
-        @board.lists.reject(&:closed)
+        @board.lists.reject(&:closed).map { |list| ListPresenter.new(list) }
       end
 
       def render
         ERB.new(BOARD_HTML_TEMPLATE).result(binding)
+      end
+    end
+
+    class ListPresenter < SimpleDelegator
+      def cards
+        super.reject(&:closed)
       end
     end
 
