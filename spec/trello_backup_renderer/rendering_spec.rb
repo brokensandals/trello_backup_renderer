@@ -21,6 +21,9 @@ RSpec.describe TrelloBackupRenderer::Rendering do
       expect(html).to include '<img class="card-cover" src="' + TEST_COVER_RELATIVE_PATH + '"/>'
 
       expect(html).to include 'This card has a description.'
+
+      expect(html).to include '<span font-color="green">Green Label</span>'
+      expect(html).to include '<span font-color="yellow">Yellow Label</span>'
     end
 
     it 'excludes archived lists' do

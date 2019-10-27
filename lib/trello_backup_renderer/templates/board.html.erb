@@ -19,6 +19,14 @@
 
             <h2 class="card-name"><%= card.name %></h2>
 
+            <% if card.labels.any? %>
+              <ul class="labels">
+                <% card.labels.each do |label| %>
+                  <li class="label"><span font-color="<%= label.color %>"><%= label.name %></span></li>
+                <% end %>
+              </ul>
+            <% end %>
+
             <% if card.desc %>
               <p class="card-desc"><%= card.desc %></p>
             <% end %>
