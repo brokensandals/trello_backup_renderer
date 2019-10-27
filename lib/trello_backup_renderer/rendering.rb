@@ -3,6 +3,8 @@ require 'erb'
 module TrelloBackupRenderer
   module Rendering
     BOARD_HTML_TEMPLATE = File.read(File.join(__dir__, 'templates', 'board.html.erb'))
+    CSS_FILE = File.read(File.join(__dir__, 'styles', 'default.css'))
+    NO_AUTHORSHIP_CSS_FILE = File.read(File.join(__dir__, 'styles', 'no-authorship.css'))
 
     class BoardPage
       def initialize(board)
@@ -11,6 +13,11 @@ module TrelloBackupRenderer
 
       def lists
         @board.lists.reject(&:closed).map { |list| ListPresenter.new(list) }
+      end
+
+      def stylesheet_tags
+        '<style type="text/css">' + CSS_FILE + '</style>' +
+          '<style type="text/css">' + NO_AUTHORSHIP_CSS_FILE + '</style>'
       end
 
       def render

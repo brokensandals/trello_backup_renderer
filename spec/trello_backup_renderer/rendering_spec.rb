@@ -20,7 +20,7 @@ RSpec.describe TrelloBackupRenderer::Rendering do
       expect(html).to include 'Card with All Supported Features'
       expect(html).to include 'Labeled Card'
 
-      expect(html).to include '<img class="card-cover" src="' + TEST_COVER_RELATIVE_PATH + '"/>'
+      expect(html).to include '<img class="card-cover" src="' + TEST_COVER_RELATIVE_PATH + '" width="300px"/>'
 
       expect(html).to include 'This card has a description.'
 

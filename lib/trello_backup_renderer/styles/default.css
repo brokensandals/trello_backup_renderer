@@ -1,0 +1,45 @@
+.lists {
+  padding-left: 0px;
+}
+
+.list {
+  list-style-type: none;
+}
+
+.list-name {
+  padding-bottom: 5px;
+  border-bottom: 1px solid black;
+}
+
+.cards {
+  padding-left: 5px;
+}
+
+.card {
+  width: 300px;
+  list-style-type: none;
+  border: 1px solid gray;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.card-cover {
+  object-fit: scale-down;
+  margin: 0;
+}
+
+.card-name {
+  font-size: 120%;
+  margin: 0;
+  padding: 0;
+}
+
+.labels {
+  padding-left: 0;
+}
+
+.label {
+  list-style-type: none;
+  display: inline;
+}

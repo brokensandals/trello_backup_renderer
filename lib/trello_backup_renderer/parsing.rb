@@ -28,7 +28,7 @@ module TrelloBackupRenderer
         closed: card_json['closed'],
         comments: comments.select { |comment| comment.id_card == card_json['id'] },
         cover_attachment: attachments_by_id[cover_id_attachment],
-        desc: card_json['desc'],
+        desc: (card_json['desc'] if card_json['desc'] && !card_json['desc'].empty?),
         id: card_json['id'],
         id_list: card_json['idList'],
         labels: (card_json['labels'] || []).map { |label_json| parse_label_json(label_json) },

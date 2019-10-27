@@ -2,6 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8"/>
+
+  <%= stylesheet_tags %>
 </head>
 <body>
 
@@ -14,7 +16,7 @@
         <% list.cards.each do |card| %>
           <li class="card">
             <% if card.cover_attachment %>
-              <img class="card-cover" src="<%= card.cover_attachment.path %>"/>
+              <img class="card-cover" src="<%= card.cover_attachment.path %>" width="300px"/>
             <% end %>
 
             <h2 class="card-name"><%= card.name %></h2>
