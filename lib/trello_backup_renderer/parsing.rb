@@ -72,11 +72,16 @@ module TrelloBackupRenderer
       paths.transform_values { |path| path.sub(/\A#{Regexp.quote(base_dir)}\/?/, '')}
     end
 
-    def load_board_dir(dir)
-      raise Error, "Not a directory: #{dir}" unless File.directory?(dir)
+    def find_board_json_file(dir)
       board_file_paths = Dir.glob(File.join(dir, '*_full.json')).to_a
       raise Error, "Expected one <board_name>_full.json file in: #{dir}" unless board_file_paths.count == 1
-      board_json = JSON.parse(File.read(board_file_paths.first))
+      board_file_paths.first
+    end
+
+    def load_board_dir(dir)
+      raise Error, "Not a directory: #{dir}" unless File.directory?(dir)
+      board_file_path = find_board_json_file(dir)
+      board_json = JSON.parse(File.read(board_file_path))
       attachment_paths = relativize_attachment_paths(load_attachment_paths(dir), dir)
       parse_board_json(board_json, attachment_paths)
     end
