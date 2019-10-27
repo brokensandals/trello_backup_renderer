@@ -11,6 +11,10 @@ optparse = OptionParser.new do |opts|
     options[:hide_authorship] = true
   end
 
+  opts.on('--omit-styles', 'Do not include default stylesheet.') do
+    options[:omit_styles] = true
+  end
+
   opts.on('--version', 'Print program version and exit') do
     puts "trello_backup_renderer #{TrelloBackupRenderer::VERSION}"
     exit 0
