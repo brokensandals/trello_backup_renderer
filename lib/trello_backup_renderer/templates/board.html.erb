@@ -5,17 +5,21 @@
 </head>
 <body>
 
-<% lists.each do |list| %>
-  <section class="list">
-    <h1><%= list.name %></h1>
+<ul class="lists">
+  <% lists.each do |list| %>
+    <li class="list">
+      <h1 class="list-name"><%= list.name %></h1>
 
-    <% list.cards.each do |card| %>
-      <section class="card">
-        <h1><%= card.name %></h1>
-      </section>
-    <% end %>
-  </section>
+      <ul class="cards">
+        <% list.cards.each do |card| %>
+          <li class="card">
+            <h2 class="card-name"><%= card.name %></h2>
+          </li>
+        <% end %>
+      </ul>
+    </li>
 <% end %>
+</ul>
 
 </body>
 </html>

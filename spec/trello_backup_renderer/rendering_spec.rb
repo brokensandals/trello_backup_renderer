@@ -9,13 +9,13 @@ RSpec.describe TrelloBackupRenderer::Rendering do
       html = TrelloBackupRenderer.generate_board_html(board)
 
       expect(html).not_to be_nil
-      expect(html).to include '<h1>First List</h1>'
-      expect(html).to include '<h1>Empty List</h1>'
-      expect(html).to include '<h1>Third List</h1>'
+      expect(html).to include 'First List'
+      expect(html).to include 'Empty List'
+      expect(html).to include 'Third List'
 
-      expect(html).to include '<h1>Simple Card</h1>'
-      expect(html).to include '<h1>Card with All Supported Features</h1>'
-      expect(html).to include '<h1>Labeled Card</h1>'
+      expect(html).to include 'Simple Card'
+      expect(html).to include 'Card with All Supported Features'
+      expect(html).to include 'Labeled Card'
     end
 
     it 'excludes archived lists' do
