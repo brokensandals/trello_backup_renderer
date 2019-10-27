@@ -7,6 +7,7 @@ RSpec.describe TrelloBackupRenderer::Rendering do
     it 'generates html for the test board' do
       board = TrelloBackupRenderer.load_board_dir(TEST_BOARD_DIR)
       html = TrelloBackupRenderer.generate_board_html(board)
+      # File.write('spec/test_board/test.html', html)
 
       expect(html).not_to be_nil
       expect(html).to include 'First List'
@@ -18,6 +19,8 @@ RSpec.describe TrelloBackupRenderer::Rendering do
       expect(html).to include 'Labeled Card'
 
       expect(html).to include '<img class="card-cover" src="' + TEST_COVER_RELATIVE_PATH + '"/>'
+
+      expect(html).to include 'This card has a description.'
     end
 
     it 'excludes archived lists' do
@@ -39,6 +42,16 @@ RSpec.describe TrelloBackupRenderer::Rendering do
 
       expect(html).to include 'Open Card'
       expect(html).not_to include 'Archived Card'
+    end
+
+    it 'escapes html in card descriptions' do
+      card = Card.new(name: 'Card', pos: 1, desc: 'Hello <p>How are you</p>')
+      list = List.new(name: 'List', pos: 1, cards: [card])
+      board = Board.new(lists: [list])
+      html = TrelloBackupRenderer.generate_board_html(board)
+
+      expect(html).not_to include 'Hello <p>How are you</p>'
+      expect(html).to include 'Hello &lt;p&gt;How are you&lt;/p&gt;'
     end
   end
 end

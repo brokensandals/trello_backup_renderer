@@ -16,7 +16,12 @@
             <% if card.cover_attachment %>
               <img class="card-cover" src="<%= card.cover_attachment.path %>"/>
             <% end %>
+
             <h2 class="card-name"><%= card.name %></h2>
+
+            <% if card.desc %>
+              <p class="card-desc"><%= card.desc %></p>
+            <% end %>
           </li>
         <% end %>
       </ul>
