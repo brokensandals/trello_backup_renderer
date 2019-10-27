@@ -70,6 +70,14 @@ RSpec.describe TrelloBackupRenderer::Parsing do
       expect(c2labels.count).to eq(1)
       expect(c2labels[0].color).to eq('green')
       expect(c2labels[0].name).to eq('Green Label')
+
+      c1comments = card1.comments
+      expect(c1comments.count).to eq(1)
+
+      comment0 = c1comments[0]
+      expect(comment0.creator_full_name).to eq('Smerson McPerson')
+      expect(comment0.date).to eq('2019-10-26T22:57:56.579Z')
+      expect(comment0.text).to eq("I've attached a photo of my cat.")
     end
   end
 end

@@ -26,6 +26,7 @@ module TrelloBackupRenderer
 
     class Card
       attr_reader :closed
+      attr_reader :comments
       attr_reader :cover_attachment
       attr_reader :desc
       attr_reader :id
@@ -36,6 +37,7 @@ module TrelloBackupRenderer
 
       def initialize(args)
         @closed = args[:closed]
+        @comments = (args[:comments] || []).sort_by(&:date)
         @cover_attachment = args[:cover_attachment]
         @desc = args[:desc]
         @id = args[:id]
@@ -61,6 +63,20 @@ module TrelloBackupRenderer
       def initialize(args)
         @color = args[:color]
         @name = args[:name]
+      end
+    end
+
+    class Comment
+      attr_reader :creator_full_name
+      attr_reader :date
+      attr_reader :id_card
+      attr_reader :text
+
+      def initialize(args)
+        @creator_full_name = args[:creator_full_name]
+        @date = args[:date]
+        @id_card = args[:id_card]
+        @text = args[:text]
       end
     end
   end

@@ -6,6 +6,7 @@
           "id": "id1"
         }
       },
+      "date": "2019-10-27T02:54:13.812Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -17,6 +18,7 @@
           "id": "id1"
         }
       },
+      "date": "2019-10-27T02:54:10.705Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -25,6 +27,7 @@
     {
       "data": {
       },
+      "date": "2019-10-27T02:54:02.274Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -33,6 +36,7 @@
     {
       "data": {
       },
+      "date": "2019-10-27T02:53:59.857Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -41,6 +45,7 @@
     {
       "data": {
       },
+      "date": "2019-10-27T02:53:55.952Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -49,6 +54,7 @@
     {
       "data": {
       },
+      "date": "2019-10-27T02:53:43.161Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -57,6 +63,7 @@
     {
       "data": {
       },
+      "date": "2019-10-27T02:53:38.590Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -68,6 +75,7 @@
           "id": "id2"
         }
       },
+      "date": "2019-10-26T23:31:30.308Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -80,6 +88,7 @@
         },
         "text": "I've attached a photo of my cat."
       },
+      "date": "2019-10-26T22:57:56.579Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -91,6 +100,7 @@
           "id": "id3"
         }
       },
+      "date": "2019-10-26T22:57:49.104Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -102,6 +112,7 @@
           "id": "id3"
         }
       },
+      "date": "2019-10-26T22:57:33.350Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -110,6 +121,7 @@
     {
       "data": {
       },
+      "date": "2019-10-26T22:51:08.393Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -121,6 +133,7 @@
           "id": "id2"
         }
       },
+      "date": "2019-10-26T22:50:40.859Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -129,6 +142,7 @@
     {
       "data": {
       },
+      "date": "2019-10-26T22:50:16.581Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -137,6 +151,7 @@
     {
       "data": {
       },
+      "date": "2019-10-26T22:50:13.296Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -148,6 +163,7 @@
           "id": "id3"
         }
       },
+      "date": "2019-10-26T22:50:03.567Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -159,6 +175,7 @@
           "id": "id4"
         }
       },
+      "date": "2019-10-26T22:49:29.324Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -167,6 +184,7 @@
     {
       "data": {
       },
+      "date": "2019-10-26T22:49:24.771Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -175,6 +193,7 @@
     {
       "data": {
       },
+      "date": "2019-10-26T22:49:14.696Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -183,6 +202,7 @@
     {
       "data": {
       },
+      "date": "2019-10-26T22:48:57.928Z",
       "memberCreator": {
         "fullName": "Smerson McPerson"
       },
@@ -196,6 +216,7 @@
         "idAttachment": "id5"
       },
       "desc": "",
+      "id": "id4",
       "idList": "id6",
       "labels": [
 
@@ -209,6 +230,7 @@
         "idAttachment": "id7"
       },
       "desc": "This card has a description.",
+      "id": "id3",
       "idList": "id6",
       "labels": [
         {
@@ -225,6 +247,7 @@
         "idAttachment": "id5"
       },
       "desc": "",
+      "id": "id2",
       "idList": "id8",
       "labels": [
         {

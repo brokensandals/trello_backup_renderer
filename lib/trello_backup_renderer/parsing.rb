@@ -4,6 +4,16 @@ module TrelloBackupRenderer
   module Parsing
     include Models
 
+    def parse_comment_json(action_json)
+      return nil unless action_json['type'] == 'commentCard'
+      Comment.new(
+        creator_full_name: action_json['memberCreator']['fullName'],
+        date: action_json['date'],
+        id_card: action_json['data']['card']['id'],
+        text: action_json['data']['text']
+      )
+    end
+
     def parse_label_json(label_json)
       Label.new(
         color: label_json['color'],
@@ -11,11 +21,12 @@ module TrelloBackupRenderer
       )
     end
 
-    def parse_card_json(card_json, attachments_by_id)
+    def parse_card_json(card_json, attachments_by_id, comments)
       cover_id_attachment = card_json.fetch('cover', {})['idAttachment']
 
       Card.new(
         closed: card_json['closed'],
+        comments: comments.select { |comment| comment.id_card == card_json['id'] },
         cover_attachment: attachments_by_id[cover_id_attachment],
         desc: card_json['desc'],
         id: card_json['id'],
@@ -38,7 +49,8 @@ module TrelloBackupRenderer
 
     def parse_board_json(board_json, attachment_paths)
       attachments_by_id = attachment_paths.transform_values { |path| Attachment.new(path: path) }
-      cards = (board_json['cards'] || []).map { |card_json| parse_card_json(card_json, attachments_by_id) }
+      comments = (board_json['actions'] || []).map { |action_json| parse_comment_json(action_json) }.compact
+      cards = (board_json['cards'] || []).map { |card_json| parse_card_json(card_json, attachments_by_id, comments) }
       Board.new(
         lists: (board_json['lists'] || []).map { |list_json| parse_list_json(list_json, cards) }
       )
