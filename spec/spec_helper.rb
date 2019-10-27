@@ -1,6 +1,8 @@
 require "bundler/setup"
 require "trello_backup_renderer"
 
+TEST_BOARD_DIR = File.join(__dir__, 'test_board')
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
