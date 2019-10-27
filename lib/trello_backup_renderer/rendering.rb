@@ -9,10 +9,12 @@ module TrelloBackupRenderer
     class Options
       attr_reader :hide_authorship
       attr_reader :omit_styles
+      attr_reader :head_insert
 
       def initialize(args = {})
         @hide_authorship = args[:hide_authorship]
         @omit_styles = args[:omit_styles]
+        @head_insert = args[:head_insert]
       end
     end
 
@@ -31,6 +33,10 @@ module TrelloBackupRenderer
         tags << '<style type="text/css">' + CSS_FILE + '</style>' unless @options.omit_styles
         tags << '<style type="text/css">' + NO_AUTHORSHIP_CSS_FILE + '</style>' if @options.hide_authorship
         tags
+      end
+
+      def head_insert
+        @options.head_insert || ''
       end
 
       def render

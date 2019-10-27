@@ -7,6 +7,10 @@ options = {}
 optparse = OptionParser.new do |opts|
   opts.banner = 'Usage: trello_backup_renderer BOARD_BACKUP_DIR [options]'
 
+  opts.on('--head-insert=HTML', 'Add HTML inside the <head> tag') do |html|
+    options[:head_insert] = html
+  end
+
   opts.on('--hide-authorship', 'Do not display the authors of comments. (Done via CSS.)') do
     options[:hide_authorship] = true
   end
