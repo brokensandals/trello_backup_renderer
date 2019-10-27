@@ -3,7 +3,7 @@ module TrelloBackupRenderer
     class Board
       attr_reader :lists
 
-      def initialize(args)
+      def initialize(args = {})
         @lists = (args[:lists] || []).sort_by(&:pos)
       end
     end

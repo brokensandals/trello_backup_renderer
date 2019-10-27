@@ -32,7 +32,7 @@ RSpec.describe TrelloBackupRenderer::Rendering do
     end
 
     it 'excludes archived lists' do
-      open_list = List.new(closed: false, name: 'Open List', pos: 1)
+      open_list = List.new(name: 'Open List', pos: 1)
       archived_list = List.new(closed: true, name: 'Archived List', pos: 2)
       board = Board.new(lists: [open_list, archived_list])
       html = TrelloBackupRenderer.generate_board_html(board)
@@ -42,9 +42,9 @@ RSpec.describe TrelloBackupRenderer::Rendering do
     end
 
     it 'excludes archived cards' do
-      open_card = Card.new(closed: false, name: 'Open Card', pos: 1)
+      open_card = Card.new(name: 'Open Card', pos: 1)
       archived_card = Card.new(closed: true, name: 'Archived Card', pos: 2)
-      list = List.new(closed: false, name: 'List', pos: 1, cards: [open_card, archived_card])
+      list = List.new(name: 'List', pos: 1, cards: [open_card, archived_card])
       board = Board.new(lists: [list])
       html = TrelloBackupRenderer.generate_board_html(board)
 
@@ -76,36 +76,31 @@ RSpec.describe TrelloBackupRenderer::Rendering do
     end
 
     it 'includes CSS to hide authorship when requested' do
-      board = Board.new(lists: [])
       options = Options.new(hide_authorship: true)
-      html = TrelloBackupRenderer.generate_board_html(board, options)
+      html = TrelloBackupRenderer.generate_board_html(Board.new, options)
       expect(html).to match(/\.authorship \{\n\s*display: none;\n\s*\}/m)
     end
 
     it 'does not include CSS to hide authorship when not requested' do
-      board = Board.new(lists: [])
-      html = TrelloBackupRenderer.generate_board_html(board)
+      html = TrelloBackupRenderer.generate_board_html(Board.new)
       expect(html).not_to match(/\.authorship \{\n\s*display: none;\n\s*\}/m)
     end
 
     it 'omits default styles when requested' do
-      board = Board.new(lists: [])
       options = Options.new(omit_styles: true)
-      html = TrelloBackupRenderer.generate_board_html(board, options)
+      html = TrelloBackupRenderer.generate_board_html(Board.new, options)
       expect(html).not_to include '<style'
     end
 
     it 'includes default styles when not otherwise directed' do
-      board = Board.new(lists: [])
-      html = TrelloBackupRenderer.generate_board_html(board)
+      html = TrelloBackupRenderer.generate_board_html(Board.new)
       expect(html).to include(TrelloBackupRenderer::Rendering::CSS_FILE)
     end
 
     it 'includes additional HTML in head section when specified' do
-      board = Board.new(lists: [])
       tag = '<link href="bogus" rel="stylesheet">'
       options = Options.new(head_insert: tag)
-      html = TrelloBackupRenderer.generate_board_html(board, options)
+      html = TrelloBackupRenderer.generate_board_html(Board.new, options)
       expect(html).to include(tag)
     end
   end
