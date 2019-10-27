@@ -9,7 +9,6 @@ RSpec.describe TrelloBackupRenderer::Rendering do
     it 'generates html for the test board' do
       board = TrelloBackupRenderer.load_board_dir(TEST_BOARD_DIR)
       html = TrelloBackupRenderer.generate_board_html(board)
-      # File.write('spec/test_board/test.html', html)
 
       expect(html).not_to be_nil
       expect(html).to include 'First List'
