@@ -1,3 +1,7 @@
+Update:
+
+Archived as I no longer regularly use Trello.
+
 # trello\_backup\_renderer
 
 Generates HTML files for [Trello](http://trello.com) boards from backups created by [jtpio/trello-full-backup](https://github.com/jtpio/trello-full-backup).
